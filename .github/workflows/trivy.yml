@@ -1,0 +1,83 @@
+name: Trivy Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 * * * # daily at midnight
+  workflow_call:
+    inputs:
+      image-ref:
+        type: string
+        description: Docker image ref to be scanned by Trivy
+        required: false
+
+env:
+  DOCKER_BUILDKIT: "1"
+  COSIGN_EXPERIMENTAL: "1"
+
+jobs:
+  trivy-fs:
+    name: Scan filesystem
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Scan repo filesystem
+        uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0 # 0.29.0
+        with:
+          scan-type: fs
+          format: sarif
+          output: trivy-results.sarif
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0 # v3.28.9
+        if: cancelled() == false
+        with:
+          sarif_file: trivy-results.sarif
+
+  trivy-image:
+    name: Scan image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Normalize image name
+        id: normalize
+        shell: bash
+        env:
+          IMAGE_REF: ${{ inputs.image-ref }}
+        run: |
+          if [ -z "$IMAGE_REF" ]; then
+            IMAGE_REF=$(echo "${GITHUB_REPOSITORY/docker-/}" | tr '[:upper:]' '[:lower:]')
+            if [[ "$GITHUB_REF_NAME" =~ ^v?[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              IMAGE_REF="$IMAGE_REF:${GITHUB_REF_NAME/v/}"
+            elif [ "$GITHUB_REF_NAME" == "main" ]; then
+              IMAGE_REF="$IMAGE_REF:latest"
+            else
+              BRANCH_NAME=$(echo "${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
+                | tr '[:upper:]' '[:lower:]' | sed 's/[^a-zA-Z0-9]/-/g')
+              IMAGE_REF="$IMAGE_REF:$BRANCH_NAME"
+            fi
+          fi
+          echo "image-ref=$IMAGE_REF" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Scan image
+        uses: aquasecurity/trivy-action@18f2510ee396bbf400402947b394f2dd8c87dbb0 # 0.29.0
+        with:
+          image-ref: ${{ steps.normalize.outputs.image-ref }}
+          format: sarif
+          output: trivy-results.sarif
+
+      - name: Upload scan results
+        uses: github/codeql-action/upload-sarif@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0 # v3.28.9
+        if: cancelled() == false
+        with:
+          sarif_file: trivy-results.sarif
