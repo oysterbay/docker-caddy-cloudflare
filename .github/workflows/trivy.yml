@@ -21,7 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -30,21 +29,18 @@ jobs:
         uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         with:
           scan-type: fs
-          format: sarif
-          output: trivy-results.sarif
+          format: table
+          output: trivy-fs-results.txt
 
-      - name: Upload scan results
-        uses: github/codeql-action/upload-sarif@ff0a06e83cb2de871e5a09832bc6a81e7276941f # v3.28.18
+      - name: Display scan results
         if: cancelled() == false
-        with:
-          sarif_file: trivy-results.sarif
+        run: cat trivy-fs-results.txt
 
   trivy-image:
     name: Scan image
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -73,11 +69,9 @@ jobs:
         uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         with:
           image-ref: ${{ steps.normalize.outputs.image-ref }}
-          format: sarif
-          output: trivy-results.sarif
+          format: table
+          output: trivy-image-results.txt
 
-      - name: Upload scan results
-        uses: github/codeql-action/upload-sarif@ff0a06e83cb2de871e5a09832bc6a81e7276941f # v3.28.18
+      - name: Display scan results
         if: cancelled() == false
-        with:
-          sarif_file: trivy-results.sarif
+        run: cat trivy-image-results.txt
