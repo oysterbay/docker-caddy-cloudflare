@@ -31,7 +31,7 @@ Any security vulnerabilities must be fixed in the upstream Caddy project
 ## Reporting a Vulnerability
 
 For security related issues with **this project**, please report it privately
-using the [Report a Vulnerability](https://github.com/oysterbay/docker-caddy-cloudflare/security/advisories/new)
+using the [Report a Vulnerability](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/security/advisories/new)
 form including as much detail as possible.
 
 For security related issues with **Caddy itself**, please report it to their

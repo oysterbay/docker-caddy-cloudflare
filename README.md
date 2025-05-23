@@ -1,9 +1,9 @@
 # 🐳 caddy-cloudflare
 
-[![DockerHub](https://img.shields.io/badge/DockerHub-oysterbay%2Fcaddy--cloudflare-blue?style=flat)](https://hub.docker.com/r/oysterbay/caddy-cloudflare)
-[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/oysterbay/docker-caddy-cloudflare?label=Latest%20Version)](https://github.com/oysterbay/docker-caddy-cloudflare/tags)
-[![Docker Build & Release](https://github.com/oysterbay/docker-caddy-cloudflare/actions/workflows/docker.yml/badge.svg)](https://github.com/oysterbay/docker-caddy-cloudflare/actions/workflows/docker.yml)
-[![License](https://img.shields.io/github/license/oysterbay/docker-caddy-cloudflare)](https://github.com/oysterbay/docker-caddy-cloudflare/blob/main/LICENSE)
+[![DockerHub](https://img.shields.io/badge/DockerHub-iarekylew00t%2Fcaddy--cloudflare-blue?style=flat)](https://hub.docker.com/r/iarekylew00t/caddy-cloudflare)
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/IAreKyleW00t/docker-caddy-cloudflare?label=Latest%20Version)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tags)
+[![Docker Build & Release](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/actions/workflows/docker.yml/badge.svg)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/actions/workflows/docker.yml)
+[![License](https://img.shields.io/github/license/IAreKyleW00t/docker-caddy-cloudflare)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/blob/main/LICENSE)
 [![Dependabot](https://img.shields.io/badge/Dependabot-0366d6?style=flat&logo=dependabot&logoColor=white)](.github/dependabot.yml)
 
 The [Caddy](https://hub.docker.com/_/caddy) Docker image with the added
@@ -17,26 +17,26 @@ Built for the same platforms as the upstream Caddy project (except Windows, sorr
 
 ```sh
 # Docker Hub
-docker pull oysterbay/caddy-cloudflare:latest
+docker pull iarekylew00t/caddy-cloudflare:latest
 
 # GHCR
-docker pull ghcr.io/oysterbay/caddy-cloudflare:latest
+docker pull ghcr.io/iarekylew00t/caddy-cloudflare:latest
 ```
 
 ## Tags
 
 The following tags are the latest available for the
-`oysterbay/caddy-cloudflare` image.
+`iarekylew00t/caddy-cloudflare` image.
 
 <!--START-TAGS-->
-- [`latest`](https://github.com/oysterbay/docker-caddy-cloudflare/tree/v2.9.1)
-- [`2.9.1`](https://github.com/oysterbay/docker-caddy-cloudflare/tree/v2.9.1)
-- [`2.9`](https://github.com/oysterbay/docker-caddy-cloudflare/tree/v2.9)
-- [`2`](https://github.com/oysterbay/docker-caddy-cloudflare/tree/v2)
+- [`latest`](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tree/v2.10.0)
+- [`2.10.0`](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tree/v2.10.0)
+- [`2.10`](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tree/v2.10)
+- [`2`](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tree/v2)
 <!--END-TAGS-->
 
 Check the GitHub
-[Tags](https://github.com/oysterbay/docker-caddy-cloudflare/tags)
+[Tags](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tags)
 for a list of all versions!
 
 ## Usage
@@ -65,7 +65,7 @@ docker run --rm -it \
   -v caddy_config:/config \
   -v $PWD/Caddyfile:/etc/caddy/Caddyfile \
   -e CF_API_TOKEN=UhKLc...JD9jk \
-  oysterbay/caddy-cloudflare:latest
+  iarekylew00t/caddy-cloudflare:latest
 ```
 
 If you prefer `docker-compose` you can use the provided
@@ -144,16 +144,16 @@ following command to verify the integrity of these images yourself.
 ```sh
 cosign verify \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
-  --certificate-identity-regexp https://github.com/oysterbay/docker-caddy-cloudflare/.github/workflows/ \
-  oysterbay/caddy-cloudflare:latest
+  --certificate-identity-regexp https://github.com/IAreKyleW00t/docker-caddy-cloudflare/.github/workflows/ \
+  iarekylew00t/caddy-cloudflare:latest
 ```
 
 ## Contributing
 
 Feel free to contribute and make things better by opening an
-[Issue](https://github.com/oysterbay/docker-caddy-cloudflare/issues) or
-[Pull Request](https://github.com/oysterbay/docker-caddy-cloudflare/pulls).
+[Issue](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/issues) or
+[Pull Request](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/pulls).
 
 ## License
 
-See [LICENSE](https://github.com/oysterbay/docker-caddy-cloudflare/blob/main/LICENSE).
+See [LICENSE](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/blob/main/LICENSE).
