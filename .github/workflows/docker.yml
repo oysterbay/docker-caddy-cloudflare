@@ -39,8 +39,8 @@ jobs:
         id: build-metadata
         shell: bash
         run: |
-          IMAGE_TITLE=${GITHUB_REPOSITORY/*docker-/}
-          IMAGE_NAME=$(echo "${GITHUB_REPOSITORY/docker-/}" | tr '[:upper:]' '[:lower:]')
+          IMAGE_TITLE="caddy-cloudflare"
+          IMAGE_NAME="${{ vars.DOCKERHUB_USERNAME }}/caddy-cloudflare"
           CADDY_VERSION=$(grep -m 1 -Eo 'caddy:[0-9]+\.[0-9]+\.[0-9]+' Dockerfile \
             | sed -E 's/.+:([0-9]+\.[0-9]+\.[0-9]+)(.+)?$/\1/g')
           BRANCH_NAME=$(echo "${GITHUB_HEAD_REF:-$GITHUB_REF_NAME}" \
@@ -60,6 +60,7 @@ jobs:
             docker.io/${{ steps.build-metadata.outputs.image-name }}
             ghcr.io/${{ steps.build-metadata.outputs.image-name }}
           tags: |
+            type=raw,value=latest,enable={{is_default_branch}}
             type=semver,pattern={{version}},value=v${{ steps.build-metadata.outputs.caddy-version }}
             type=semver,pattern={{major}}.{{minor}},value=v${{ steps.build-metadata.outputs.caddy-version }}
             type=semver,pattern={{major}},value=v${{ steps.build-metadata.outputs.caddy-version }}
