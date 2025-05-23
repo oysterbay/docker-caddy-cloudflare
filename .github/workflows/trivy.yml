@@ -15,12 +15,18 @@ env:
   DOCKER_BUILDKIT: "1"
   COSIGN_EXPERIMENTAL: "1"
 
+# Add permissions at the workflow level
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   trivy-fs:
     name: Scan filesystem
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      security-events: write  # Add this permission
     steps:
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -29,18 +35,28 @@ jobs:
         uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         with:
           scan-type: fs
-          format: table
-          output: trivy-fs-results.txt
+          format: sarif
+          output: trivy-fs-results.sarif
 
-      - name: Display scan results
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@48ab28a6f5dbc2ac3de24cb2c1bc80a9572dd067 # v3.27.6
+        if: always()
+        with:
+          sarif_file: trivy-fs-results.sarif
+
+      - name: Display scan results (table format)
         if: cancelled() == false
-        run: cat trivy-fs-results.txt
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
+        with:
+          scan-type: fs
+          format: table
 
   trivy-image:
     name: Scan image
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      security-events: write  # Add this permission
     steps:
       - name: Checkout repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -69,9 +85,18 @@ jobs:
         uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
         with:
           image-ref: ${{ steps.normalize.outputs.image-ref }}
-          format: table
-          output: trivy-image-results.txt
+          format: sarif
+          output: trivy-image-results.sarif
 
-      - name: Display scan results
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@48ab28a6f5dbc80a9572dd067 # v3.27.6
+        if: always()
+        with:
+          sarif_file: trivy-image-results.sarif
+
+      - name: Display scan results (table format)
         if: cancelled() == false
-        run: cat trivy-image-results.txt
+        uses: aquasecurity/trivy-action@6c175e9c4083a92bbca2f9724c8a5e33bc2d97a5 # 0.30.0
+        with:
+          image-ref: ${{ steps.normalize.outputs.image-ref }}
+          format: table
