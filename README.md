@@ -1,6 +1,6 @@
 # 🐳 caddy-cloudflare
 
-[![DockerHub](https://img.shields.io/badge/DockerHub-iarekylew00t%2Fcaddy--cloudflare-blue?style=flat)](https://hub.docker.com/r/iarekylew00t/caddy-cloudflare)
+[![DockerHub](https://img.shields.io/badge/DockerHub-iarekylew00t%2Fcaddy--cloudflare-blue?style=flat)](https://hub.docker.com/r/shreddedmofo/caddy-cloudflare)
 [![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/IAreKyleW00t/docker-caddy-cloudflare?label=Latest%20Version)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tags)
 [![Docker Build & Release](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/actions/workflows/docker.yml/badge.svg)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/actions/workflows/docker.yml)
 [![License](https://img.shields.io/github/license/IAreKyleW00t/docker-caddy-cloudflare)](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/blob/main/LICENSE)
@@ -17,16 +17,16 @@ Built for the same platforms as the upstream Caddy project (except Windows, sorr
 
 ```sh
 # Docker Hub
-docker pull iarekylew00t/caddy-cloudflare:latest
+docker pull shreddedmofo/caddy-cloudflare:latest
 
 # GHCR
-docker pull ghcr.io/iarekylew00t/caddy-cloudflare:latest
+docker pull ghcr.io/shreddedmofo/caddy-cloudflare:latest
 ```
 
 ## Tags
 
 The following tags are the latest available for the
-`iarekylew00t/caddy-cloudflare` image.
+`shreddedmofo/caddy-cloudflare` image.
 
 <!--START-TAGS-->
 - [`latest`](https://github.com/IAreKyleW00t/docker-caddy-cloudflare/tree/v2.10.0)
@@ -65,7 +65,7 @@ docker run --rm -it \
   -v caddy_config:/config \
   -v $PWD/Caddyfile:/etc/caddy/Caddyfile \
   -e CF_API_TOKEN=UhKLc...JD9jk \
-  iarekylew00t/caddy-cloudflare:latest
+  shreddedmofo/caddy-cloudflare:latest
 ```
 
 If you prefer `docker-compose` you can use the provided
@@ -145,7 +145,7 @@ following command to verify the integrity of these images yourself.
 cosign verify \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com \
   --certificate-identity-regexp https://github.com/IAreKyleW00t/docker-caddy-cloudflare/.github/workflows/ \
-  iarekylew00t/caddy-cloudflare:latest
+  shreddedmofo/caddy-cloudflare:latest
 ```
 
 ## Contributing
