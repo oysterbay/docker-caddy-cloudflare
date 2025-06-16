@@ -117,7 +117,7 @@ jobs:
           echo "'$WORKFLOW_NAME' completed!"
 
       - name: Build CI Docker image
-        uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         id: build
         with:
           context: .
@@ -232,7 +232,7 @@ jobs:
 
       - name: Publish final Docker image
         id: publish
-        uses: docker/build-push-action@1dc73863535b631f98b2378be8619f83b136f4a0 # v6.17.0
+        uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
           push: true
@@ -253,7 +253,7 @@ jobs:
 
       # This will automatically attach the SBOM to the release
       - name: Generate final Docker image SBOM
-        uses: anchore/sbom-action@e11c554f704a0b820cbf8c51673f6945e0731532 # v0.20.0
+        uses: anchore/sbom-action@9246b90769f852b3a8921f330c59e0b3f439d6e9 # v0.20.1
         with:
           format: spdx-json
           image: ${{ needs.metadata.outputs.image-name }}@${{ steps.publish.outputs.digest }}
@@ -276,7 +276,7 @@ jobs:
           git push -f -u origin "v$MAJOR.$MINOR.$PATCH"
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@da05d552573ad5aba039eaac05058a918a7bf631 # v2.2.2
+        uses: softprops/action-gh-release@72f2c25fcb47643c292f7107632f7a47c1df5cd8 # v2.3.2
         with:
           tag_name: v${{ needs.metadata.outputs.caddy-version }}
           make_latest: true
