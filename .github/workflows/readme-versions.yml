@@ -15,7 +15,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout PR
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
@@ -70,7 +70,7 @@ jobs:
 
       - name: Push changes back to PR
         if: steps.changed.outputs.changed == 'true'
-        uses: iarekylew00t/verified-bot-commit@29b641455ab27bc012ce6b3147e271d661b48a4a # v1.3.5
+        uses: iarekylew00t/verified-bot-commit@cc09d455be3e20eb6b1c3d1c30a5221f9475aa10 # v1.5.1
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           message: "docs: Updating README for v${{ steps.caddy.outputs.version }}"
